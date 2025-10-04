@@ -1,12 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AdCard } from "./AdCard";
 import Icon from "@/components/ui/icon";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const ProfilePage = () => {
+  const { user, isAuthenticated } = useAuth();
+
   const userAds = [
     {
       id: 1,
@@ -48,6 +50,35 @@ export const ProfilePage = () => {
     },
   ];
 
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  if (!isAuthenticated || !user) {
+    return (
+      <div className="min-h-screen bg-secondary/30 flex items-center justify-center">
+        <Card className="max-w-md w-full mx-4">
+          <CardContent className="pt-6 text-center">
+            <Icon name="UserX" size={48} className="mx-auto text-muted-foreground mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Войдите в аккаунт</h2>
+            <p className="text-muted-foreground mb-6">
+              Для просмотра профиля необходимо войти в систему
+            </p>
+            <Button className="w-full">
+              <Icon name="LogIn" size={18} className="mr-2" />
+              Войти
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-secondary/30 py-8">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -55,12 +86,14 @@ export const ProfilePage = () => {
           <CardContent className="pt-6">
             <div className="flex items-center gap-6">
               <Avatar className="w-24 h-24">
-                <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop" />
-                <AvatarFallback>ИИ</AvatarFallback>
+                <AvatarFallback className="bg-primary text-primary-foreground text-2xl">
+                  {getInitials(user.name)}
+                </AvatarFallback>
               </Avatar>
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-foreground mb-2">Иван Иванов</h1>
-                <p className="text-muted-foreground mb-3">На сайте с января 2023</p>
+                <h1 className="text-2xl font-bold text-foreground mb-2">{user.name}</h1>
+                <p className="text-muted-foreground mb-1">{user.email}</p>
+                <p className="text-sm text-muted-foreground mb-3">На сайте с октября 2024</p>
                 <div className="flex gap-4">
                   <div className="flex items-center gap-2">
                     <Icon name="Package" size={18} className="text-primary" />
