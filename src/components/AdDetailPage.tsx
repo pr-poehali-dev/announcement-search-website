@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import Icon from "@/components/ui/icon";
+import { MapView } from "./MapView";
 
 interface AdDetailPageProps {
   onBack: () => void;
@@ -175,6 +176,8 @@ export const AdDetailPage = ({ onBack }: AdDetailPageProps) => {
                 </div>
               </CardContent>
             </Card>
+
+            <MapView location="Москва, м. Арбатская" lat={55.7522} lng={37.6006} />
           </div>
 
           <div className="space-y-4">

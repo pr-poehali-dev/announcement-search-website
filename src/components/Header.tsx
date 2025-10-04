@@ -44,6 +44,14 @@ export const Header = ({ onNavigate }: HeaderProps) => {
               <Icon name="Grid3x3" size={18} className="mr-2" />
               Каталог
             </Button>
+            <Button variant="ghost" onClick={() => onNavigate('map')}>
+              <Icon name="Map" size={18} className="mr-2" />
+              Карта
+            </Button>
+            <Button variant="ghost" onClick={() => onNavigate('messages')}>
+              <Icon name="MessageCircle" size={18} className="mr-2" />
+              Сообщения
+            </Button>
             <Button variant="ghost" onClick={() => onNavigate('favorites')}>
               <Icon name="Heart" size={18} className="mr-2" />
               Избранное
